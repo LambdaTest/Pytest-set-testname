@@ -1,6 +1,5 @@
 import pytest
 from os import environ
-import subprocess
 
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
@@ -19,14 +18,12 @@ def driver(request):
     }
 
     desired_caps.update(browser)
+    ##Here
     test_name = request.node.name
     build = environ.get('BUILD', "Sample PY Build")
     tunnel_id = environ.get('TUNNEL', False)
     username = environ.get('LT_USERNAME', None)
     access_key = environ.get('LT_ACCESS_KEY', None)
-
-    #start terminal process
-    terminal_process = subprocess.Popen(["./LT","--user",username,"--key",access_key],stdout=subprocess.DEVNULL,stderr=subprocess.STDOUT)
 
     selenium_endpoint = "http://{}:{}@hub.lambdatest.com/wd/hub".format(username, access_key)
     desired_caps['build'] = build
@@ -53,8 +50,6 @@ def driver(request):
         else:
             browser.execute_script("lambda-status=passed")
             browser.quit()
-        #end terminal process
-        terminal_process.terminate()
         
     request.addfinalizer(fin)
 
