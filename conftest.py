@@ -32,7 +32,6 @@ def driver(request):
     desired_caps['visual']= True
     desired_caps['network']= True
     desired_caps['console']= True
-    desired_caps['tunnel'] = True
 
     executor = RemoteConnection(selenium_endpoint, resolve_ip=False)
     browser = webdriver.Remote(
